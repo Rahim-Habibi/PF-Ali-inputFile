@@ -36,12 +36,17 @@
     x = '-2592000 -1 0 3600 86400 864000 864001 950400 1728000 1728001 1814400 2592000 2592001 2678400 3456000'
     y = '86400 86400 1 2400 43200   86400    1    43200 86400       1      43200   86400 1 43200 86400'
   []
-  [pres_func]
-    type = ParsedFunction
-    expression = '(-(z-1000)) * rho * g' # z in mesh is negative and model is 1000 m below sea level
-    symbol_names =  'rho g'
-    symbol_values = '1000 9.81'
-  []
+   [./pres_func]
+    type = SolutionFunction
+  from_variable = p0
+  solution = steady_solution
+  [../]
+#[pres_func]
+    #type = ParsedFunction
+    #expression = '(-(z-1000)) * rho * g' # z in mesh is negative and model is 1000 m below sea level
+    #symbol_names =  'rho g'
+   # symbol_values = '1000 9.81'
+  #[]
   [temp_func]
       type = ParsedFunction
       expression = 't_surf + (-z) * 0.025'
@@ -352,6 +357,11 @@ produce_time = 1728000
   [produced_heat]
     type = PorousFlowSumQuantity
   []
+    [./steady_solution]
+  type = SolutionUserObject
+  timestep = LATEST
+  mesh = ********steady_out.e       # name of the output file run in steady state mode
+  [../]
 []
 
 [FluidProperties]
