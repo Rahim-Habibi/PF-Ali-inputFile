@@ -645,13 +645,13 @@ produce_time = 1728000
 []
 
 [AuxKernels]
-  [./p0_ker]
+  [./p0_kernel]
     type = FunctionAux
     variable = 'p0'
     function = '-(1000*9.81*(z - 1000))'
     execute_on = 'initial'
   [../]
-  [./dP_ker]
+  [./dP_kernel]
     type = ParsedAux
     variable = 'dP'
     args = 'pp p0'
